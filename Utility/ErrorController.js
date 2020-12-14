@@ -35,7 +35,7 @@ const handleValidationError = (err,res) => {
 }
 module.exports = (err,req,res,next) =>{
     // console.log("req",req);
-    console.log("err",err.name);
+    console.log("err",err);
     err.message = err.message || 'Error';
     err.statusCode = err.statusCode || 500;
     let error = {... err};

@@ -5,6 +5,7 @@ const dotenv= require('dotenv');
 const appError = require('../Utility/appError');
 dotenv.config({path: './../config.env'});
 const bcrypt= require('bcryptjs');
+const app = require('../app');
 const signToken = id =>{
     return jwt.sign({id},process.env.JWT_SECRET,{
         expiresIn: process.env.JWT_EXPIRES_IN
@@ -51,3 +52,27 @@ exports.login = CatchAsync(async(req,res,next) =>{
         token
     });
 })
+
+exports.isValidPhoneOrEmail =CatchAsync(async(req,res,next) => {
+    console.log("req",req.params.phoneOrEmail);
+    const phoneOrEmail = req.params.phoneOrEmail;
+    if(!phoneOrEmail){
+        return next(new appError('Plz provide phone or email',404));
+    }
+    let user = await User.findOne({email: phoneOrEmail});
+    if(!user){
+        user = await User.findOne({phone: phoneOrEmail});
+    }
+    if(!user){
+        res.status(404).json({
+            status : 'fail',
+            validPhoneOrEmail : false
+        })
+    }
+    else{
+        res.status(200).json({
+            status : 'success',
+            validPhoneOrEmail : true
+        })
+    }
+}) 
