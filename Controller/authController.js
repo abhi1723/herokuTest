@@ -12,6 +12,9 @@ const signToken = id =>{
     });
 }
 exports.signUp = CatchAsync(async(req,res,next) =>{
+    console.log("REQ BODY----");
+    console.log(req.body);
+    console.log("REQ BODY----");
     const newUser = await User.create({
         name: req.body.name,
         email: req.body.email,
@@ -23,9 +26,9 @@ exports.signUp = CatchAsync(async(req,res,next) =>{
     res.status(201).json({
         status: 'success',
         token: token,
-        data:{
+        /*data:{
             user: newUser
-        }
+        }*/
     });
 })
 
