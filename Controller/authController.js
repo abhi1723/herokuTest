@@ -31,8 +31,12 @@ exports.signUp = CatchAsync(async(req,res,next) =>{
         }*/
     });
 })
-
+// dev environment me config me jakr production kroge toh woh error sht jayenge...sirf dev env me woh aayega
 exports.login = CatchAsync(async(req,res,next) =>{
+    console.log("REQ BODY----");
+    console.log(req.body);
+    console.log("REQ BODY----");
+
     // Get details of that user
     const {emailOrPhone,password} =req.body;
 
